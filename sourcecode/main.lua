@@ -18,6 +18,8 @@ function love.draw()
   if state == GameStates.game_over then
     love.graphics.print("Game Over!", 500, 300, 0, 4, 4)
     love.graphics.print("Press A or B to restart", 430, 400, 0, 3, 3)
+    
+    love.graphics.print("Music by Eric Matyas - www.soundimage.org", 10, 700, 0, 1, 1)
   end
   
   -- Draw Pause Text
