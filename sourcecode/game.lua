@@ -19,7 +19,7 @@ down = false
 left = false
 right = false
 
--- Add Apples at random points
+-- Add food at random points within screen size
 function add_food()
   math.randomseed(os.time())
   foodX = math.random(SIZE + 43)
@@ -40,7 +40,7 @@ function game_draw()
     love.graphics.rectangle("fill", v[1] * SIZE, v[2] * SIZE, SIZE, SIZE)
   end
   
-  -- Draw Apples
+  -- Draw food
   love.graphics.setColor(0.7, 0.35, 0.4, 1.0)
   love.graphics.rectangle("fill", foodX * SIZE, foodY * SIZE, SIZE, SIZE)
   
