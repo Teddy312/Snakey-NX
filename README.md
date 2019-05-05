@@ -18,8 +18,8 @@ Dpad Left - Move Left
 Dpad Right - Move Right  
 Dpad Up - Move Up  
 Dpad Down - Move Down  
-B Button - Pause/Unpause  
-A or B Button - Restart when game over  
+A Button - Pause/Unpause  
+B Button - Restart when game over  
 
 # Installation
 
