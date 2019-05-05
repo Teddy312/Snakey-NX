@@ -68,7 +68,7 @@ function game_draw()
     
     -- Draw Score Text
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print('Score: '.. tail_length, nameFont, 25, 22)
+    love.graphics.print('Score: '.. tail_length, nameFont, 25, 23)
   end
 end
 

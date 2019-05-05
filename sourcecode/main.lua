@@ -15,6 +15,8 @@ function newButton(text, fn)
 end
 
 buttons = {}
+local fs = 2
+
 font = nil
 titleFont = nil
 nameFont = nil
@@ -31,10 +33,10 @@ function love.load()
   
   if currentscreen == 'menu' then
     menuLoad()
-    font = love.graphics.newFont(32)
-    titleFont = love.graphics.newFont(64)
-    nameFont = love.graphics.newFont(18)
-    creditFont = love.graphics.newFont(10)
+    font = love.graphics.newFont("Roboto-Light.ttf", 16 * fs)
+    titleFont = love.graphics.newFont("Roboto-Light.ttf", 32 * fs)
+    nameFont = love.graphics.newFont("Roboto-Light.ttf", 9 * fs)
+    creditFont = love.graphics.newFont("Roboto-Light.ttf", 6 * fs)
   elseif currentscreen == 'game' then
   end
 end
@@ -66,22 +68,22 @@ end
 
 function menuLoad()
   -- menu
-  table.insert(buttons, newButton("Press + To Start"))
-  table.insert(buttons, newButton("Press - To Quit"))
+  table.insert(buttons, newButton('Press + To Start'))
+  table.insert(buttons, newButton('Press - To Quit'))
 end
 
 function gameDraw()
   -- Draw GameOver Text
   if state == GameStates.game_over then
-    love.graphics.print("Game Over!", font, 520,325)
-    love.graphics.print("Press A or B to restart", nameFont, 520, 375)
-    love.graphics.print("Press + to quit to menu", nameFont, 515, 400)
+    love.graphics.print('Game Over!', font, 520,325)
+    love.graphics.print('Press A or B to restart', nameFont, 520, 375)
+    love.graphics.print('Press + to quit to menu', nameFont, 515, 400)
   end
     
   -- Draw Pause Text
   if state == GameStates.pause then
-    love.graphics.print("Game Paused", font, 520, 325)
-    love.graphics.print("Press A to continue", nameFont, 540, 375)
+    love.graphics.print('Game Paused', font, 520, 325)
+    love.graphics.print('Press A to continue', nameFont, 540, 375)
   end
 end
 
@@ -98,10 +100,10 @@ function menuDraw()
   
   -- Draw Title
   love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.print("Snakey NX", titleFont, 465, 100)
-  love.graphics.print("By Teddy312", nameFont, 580, 200)
+  love.graphics.print('Snakey NX', titleFont, 465, 100)
+  love.graphics.print('By Teddy312', nameFont, 580, 200)
   
-  love.graphics.print("Credits: Music by Eric Matyas - www.soundimage.org", creditFont, 1, 707)
+  love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', creditFont, 1, 705)
   
   -- Draw Buttons and Text
   for i, button in ipairs (buttons) do
