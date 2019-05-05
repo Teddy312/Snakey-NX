@@ -23,3 +23,11 @@ A Button - Restart when game over
 
 Download and move the "Snakey_NX.nro" to the switch folder on the micro-sd card of your switch.  
 Launch via homebrew menu
+
+# Sources
+Love2D - https://love2d.org/
+LovePotion - https://github.com/TurtleP/LovePotion
+Soundtrack - https://soundimage.org/chiptunes/
+
+# Credits
+Music by Eric Matyas - www.soundimage.org
