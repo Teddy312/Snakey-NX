@@ -9,8 +9,12 @@ local dirX = 0
 local dirY = 0
 
 local SIZE = 20
+
 local foodX = 0
 local foodY = 0
+local food2X = 0
+local food2Y = 0
+
 local tail = {}
 
 tail_length = 0
@@ -21,32 +25,51 @@ right = false
 
 -- Add food at random points within screen size
 function add_food()
-  math.randomseed(os.time())
-  foodX = math.random(SIZE + 43)
-  foodY = math.random(SIZE + 15)
-  
-  
+  math.randomseed(os.time() + 1.5)
+  foodX = math.random(SIZE + 42)
+  foodY = math.random(SIZE + 14)
+end
+
+-- Add second food at random points within screen size
+function add_second_food()
+  math.randomseed(os.time() + 2)
+  food2X = math.random(SIZE + 42)
+  food2Y = math.random(SIZE + 14)
 end
 
 -- Draw Stuff In-game
 function game_draw()
-  -- Draw Snake Head
-	love.graphics.setColor(1, 1, 1, 1.0)
-	love.graphics.rectangle("fill", snakeX * SIZE, snakeY * SIZE, SIZE, SIZE)
+  if currentscreen == 'game' then
+  -- Draw Background
+    love.graphics.setColor(0.2, 0.2, 0.2, 1.0)
+    love.graphics.rectangle("fill", 0, 0, 1280, 720)
+    
+    -- Draw Borders
+    love.graphics.setColor(0, 0, 0, 1.0)
+    love.graphics.rectangle("fill", 20, 20, 1240, 680)
+    
+    -- Draw Snake Head
+    love.graphics.setColor(1, 1, 1, 1.0)
+    love.graphics.rectangle("fill", snakeX * SIZE, snakeY * SIZE, SIZE, SIZE)
+    
+    -- Draw Snake Tail
+    love.graphics.setColor(1, 1, 1, 0.7)
+    for _, v in ipairs(tail) do
+      love.graphics.rectangle("fill", v[1] * SIZE, v[2] * SIZE, SIZE, SIZE)
+    end
   
-  -- Draw Snake Tail
-  love.graphics.setColor(1, 1, 1, 0.7)
-  for _, v in ipairs(tail) do
-    love.graphics.rectangle("fill", v[1] * SIZE, v[2] * SIZE, SIZE, SIZE)
+    -- Draw food
+    love.graphics.setColor(0.7, 0.35, 0.4, 1.0)
+    love.graphics.rectangle("fill", foodX * SIZE, foodY * SIZE, SIZE, SIZE)
+    
+    -- Draw food2
+    love.graphics.setColor(0.5, 0.7, 0.2, 1.0)
+    love.graphics.rectangle("fill", food2X * SIZE, food2Y * SIZE, SIZE, SIZE)
+    
+    -- Draw Score Text
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print('Score: '.. tail_length, nameFont, 25, 22)
   end
-  
-  -- Draw food
-  love.graphics.setColor(0.7, 0.35, 0.4, 1.0)
-  love.graphics.rectangle("fill", foodX * SIZE, foodY * SIZE, SIZE, SIZE)
-  
-  -- Draw Score Text
-  love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.print('Score: '.. tail_length, 10, 10, 0, 1.5, 1.5, 0, 0, 0, 0)
 end
 
 -- Update Stuff In-Game
@@ -75,17 +98,23 @@ function game_update()
     table.insert(tail, {0, 0})
   end
   
+  if snakeX == food2X and snakeY == food2Y then
+    add_second_food()
+    tail_length = tail_length + 1;
+    table.insert(tail, {0, 0})
+  end
+  
   -- Check Left side Screen for Collision
-  if snakeX < 0 then
+  if snakeX < 1 then
     state = GameStates.game_over
   -- Check Right side Screen for Collision
-  elseif snakeX > SIZE + 43 then
+  elseif snakeX > SIZE + 42 then
     state = GameStates.game_over
   -- Check Up side Screen for Collision
-  elseif snakeY < 0 then
+  elseif snakeY < 1 then
     state = GameStates.game_over
   -- Check Down side Screen for Collision
-  elseif snakeY > SIZE + 15 then
+  elseif snakeY > SIZE + 14 then
     state = GameStates.game_over
   end
   
@@ -115,4 +144,21 @@ function game_restart()
   tail_length = 0
   state = GameStates.running
   add_food()
+  add_second_food()
+end
+
+-- Restart Game
+function game_end()
+  -- Remove Menu Buttons
+  table.remove(buttons)
+  table.remove(buttons)
+  
+  -- Restart Game
+  game_restart()
+  
+  -- Stop Soundtrack
+  music:stop()
+  
+  -- Call love.load in main.lua
+  love.load()
 end
