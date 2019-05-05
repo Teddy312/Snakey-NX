@@ -10,6 +10,8 @@ My first homebrew game made for the Nintendo Switch using Love2D and LovePotion 
 Its Snake, don't touch the walls and don't intersect with your own.  
 Eat the food to grow longer and survive as long as you can.
 
+GbaTemp page: https://gbatemp.net/threads/my-first-homebrew-game-snakey-nx.537838/
+
 # Controls
 
 Dpad Left - Move Left  
