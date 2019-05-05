@@ -25,7 +25,7 @@ Download and move the "Snakey_NX.nro" to the switch folder on the micro-sd card 
 Launch via homebrew menu
 
 # Sources
-Love2D - https://love2d.org/
+Love2D - https://love2d.org  
 LovePotion - https://github.com/TurtleP/LovePotion  
 Soundtrack - https://soundimage.org/chiptunes/
 
