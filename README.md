@@ -26,7 +26,7 @@ Launch via homebrew menu
 
 # Sources
 Love2D - https://love2d.org/
-LovePotion - https://github.com/TurtleP/LovePotion
+LovePotion - https://github.com/TurtleP/LovePotion  
 Soundtrack - https://soundimage.org/chiptunes/
 
 # Credits
