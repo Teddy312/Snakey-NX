@@ -68,7 +68,8 @@ function game_draw()
     
     -- Draw Score Text
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print('Score: '.. tail_length, nameFont, 25, 23)
+    love.graphics.setFont(nameFont)
+    love.graphics.print('Score: '.. tail_length, 25, 23)
   end
 end
 
@@ -151,10 +152,13 @@ end
 function game_end()
   -- Remove Menu Buttons
   table.remove(buttons)
-  table.remove(buttons)
   
   -- Restart Game
-  game_restart()
+  snakeX, snakeY = 15, 15
+  dirX, dirY = 0, 0
+  up = false; down = false; left = false; right = false;
+  tail_length = 0
+  state = GameStates.running
   
   -- Stop Soundtrack
   music:stop()

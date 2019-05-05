@@ -32,12 +32,15 @@ function love.load()
     music:play() -- Play music
   
   if currentscreen == 'menu' then
+    -- Load Menu
     menuLoad()
+    -- Load Fonts
     font = love.graphics.newFont("Roboto-Light.ttf", 16 * fs)
     titleFont = love.graphics.newFont("Roboto-Light.ttf", 32 * fs)
     nameFont = love.graphics.newFont("Roboto-Light.ttf", 9 * fs)
     creditFont = love.graphics.newFont("Roboto-Light.ttf", 6 * fs)
   elseif currentscreen == 'game' then
+    -- Do Nothing
   end
 end
 
@@ -68,22 +71,25 @@ end
 
 function menuLoad()
   -- menu
-  table.insert(buttons, newButton('Press + To Start'))
-  table.insert(buttons, newButton('Press - To Quit'))
+  table.insert(buttons, newButton('Press A To Start'))
 end
 
 function gameDraw()
   -- Draw GameOver Text
   if state == GameStates.game_over then
-    love.graphics.print('Game Over!', font, 520,325)
-    love.graphics.print('Press A or B to restart', nameFont, 520, 375)
-    love.graphics.print('Press + to quit to menu', nameFont, 515, 400)
+    love.graphics.setFont(font)
+    love.graphics.print('Game Over!', 520,325)
+    love.graphics.setFont(nameFont)
+    love.graphics.print('Press B to restart', 540, 375)
+    love.graphics.print('Press + to quit to menu', 515, 400)
   end
     
   -- Draw Pause Text
   if state == GameStates.pause then
-    love.graphics.print('Game Paused', font, 520, 325)
-    love.graphics.print('Press A to continue', nameFont, 540, 375)
+    love.graphics.setFont(font)
+    love.graphics.print('Game Paused', 520, 325)
+    love.graphics.setFont(nameFont)
+    love.graphics.print('Press A to continue', 540, 375)
   end
 end
 
@@ -100,10 +106,13 @@ function menuDraw()
   
   -- Draw Title
   love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.print('Snakey NX', titleFont, 465, 100)
-  love.graphics.print('By Teddy312', nameFont, 580, 200)
+  love.graphics.setFont(titleFont)
+  love.graphics.print('Snakey NX', 465, 100)
+  love.graphics.setFont(nameFont)
+  love.graphics.print('By Teddy312', 580, 200)
   
-  love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', creditFont, 1, 705)
+  love.graphics.setFont(creditFont)
+  love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', 1, 705)
   
   -- Draw Buttons and Text
   for i, button in ipairs (buttons) do
@@ -113,14 +122,6 @@ function menuDraw()
     local by = (wh * 0.5) - (BUTTON_HEIGHT * 0.5) + cursor_y
     
     local color = {1, 1, 1, 1.0}
-    local mx, my = love.mouse.getPosition()
-    
-    local hot = mx > bx and mx < bx + button_width and
-                my > by and my < by + BUTTON_HEIGHT
-                
-    if hot then
-      color = {0.8, 0.8, 0.9, 1.0}
-    end
     
     
     -- Draw Buttons
@@ -131,7 +132,8 @@ function menuDraw()
     local textW = font:getWidth(button.text)
     local textH = font:getHeight(button.text)
     love.graphics.setColor(0, 0, 0, 1.0)
-    love.graphics.print( button.text, font, (ww * 0.5 ) - textW * 0.5, by + textH * 0.5)
+    love.graphics.setFont(font)
+    love.graphics.print( button.text, (ww * 0.5 ) - textW * 0.5, by + textH * 0.5)
     
     cursor_y = cursor_y + (BUTTON_HEIGHT + margin)
   end
@@ -173,12 +175,10 @@ function love.gamepadpressed(joystick, button)
     game_end()
   end
   
-  if button == 'plus' and currentscreen == 'menu' then
+  if button == 'a' and currentscreen == 'menu' then
     currentscreen = 'game'
     state = GameStates.running
     game()
-  elseif button == '-' and currentscreen == 'menu' then
-    love.event.quit(0)
   end
 end
 
