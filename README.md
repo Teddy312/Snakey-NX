@@ -18,3 +18,8 @@ Dpad Up - Move Up
 Dpad Down - Move Down  
 B Button - Pause/Unpause  
 A Button - Restart when game over  
+
+# Installation
+
+Download and move the "Snakey_NX.nro" to the switch folder on the micro-sd card of your switch.  
+Launch via homebrew menu
