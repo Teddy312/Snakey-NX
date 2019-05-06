@@ -25,24 +25,16 @@ right = false
 
 -- Add food at random points within screen size
 function add_food()
-  if foodX == Food2X and foodY == Food2Y then
-    add_food()
-  else
-    math.randomseed(os.time() + 0.001)
-    foodX = math.random(SIZE + 42)
-    foodY = math.random(SIZE + 14)
-  end
+  math.randomseed(os.time() + 0.001)
+  foodX = math.random(SIZE + 42)
+  foodY = math.random(SIZE + 14)
 end
 
 -- Add second food at random points within screen size
 function add_second_food()
-  if food2X == FoodX and food2Y == FoodY then
-    add_second_food()
-  else
-    math.randomseed(os.time() + 1)
-    food2X = math.random(SIZE + 42)
-    food2Y = math.random(SIZE + 14)
-  end
+  math.randomseed(os.time() + 10)
+  food2X = math.random(SIZE + 42)
+  food2Y = math.random(SIZE + 14)
 end
 
 -- Draw Stuff In-game
