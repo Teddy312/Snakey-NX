@@ -40,13 +40,23 @@ end
 -- Draw Stuff In-game
 function game_draw()
   if currentscreen == 'game' then
-  -- Draw Background
-    love.graphics.setColor(0.2, 0.2, 0.2, 1.0)
-    love.graphics.rectangle("fill", 0, 0, 1280, 720)
-    
+    if border_enable == true then
     -- Draw Borders
-    love.graphics.setColor(0, 0, 0, 1.0)
-    love.graphics.rectangle("fill", 20, 20, 1240, 680)
+      love.graphics.setColor(0.2, 0.2, 0.2, 1.0)
+      love.graphics.rectangle("fill", 0, 0, 1280, 720)
+    
+      -- Draw Background
+      love.graphics.setColor(0, 0, 0, 1.0)
+      love.graphics.rectangle("fill", 20, 20, 1240, 680)
+    elseif border_enable == false then
+      -- Draw Borders
+      love.graphics.setColor(0.0, 0.0, 0.0, 1.0)
+      love.graphics.rectangle("fill", 0, 0, 1280, 720)
+      
+      -- Draw Background
+      love.graphics.setColor(0, 0, 0, 1.0)
+      love.graphics.rectangle("fill", 20, 20, 1240, 680)
+    end
     
     -- Draw Snake Head
     love.graphics.setColor(1, 1, 1, 1.0)
@@ -58,12 +68,12 @@ function game_draw()
       love.graphics.rectangle("fill", v[1] * SIZE, v[2] * SIZE, SIZE, SIZE)
     end
   
-    -- Draw food
-    love.graphics.setColor(0.7, 0.35, 0.4, 1.0)
+    -- Draw Food 1
+    love.graphics.setColor(0.7, 0.2, 0.2, 1)
     love.graphics.rectangle("fill", foodX * SIZE, foodY * SIZE, SIZE, SIZE)
     
-    -- Draw food2
-    love.graphics.setColor(0.5, 0.7, 0.2, 1.0)
+    -- Draw Food 2
+    love.graphics.setColor(0.2, 0.7, 0.2, 1)
     love.graphics.rectangle("fill", food2X * SIZE, food2Y * SIZE, SIZE, SIZE)
     
     -- Draw Score Text
@@ -104,17 +114,32 @@ function game_update()
   end
   
   -- Check Left side Screen for Collision
-  if snakeX < 1 then
-    state = GameStates.game_over
-  -- Check Right side Screen for Collision
-  elseif snakeX > SIZE + 42 then
-    state = GameStates.game_over
-  -- Check Up side Screen for Collision
-  elseif snakeY < 1 then
-    state = GameStates.game_over
-  -- Check Down side Screen for Collision
-  elseif snakeY > SIZE + 14 then
-    state = GameStates.game_over
+  if border_enable then
+    if snakeX < 1 then
+      state = GameStates.game_over
+    -- Check Right side Screen for Collision
+    elseif snakeX > SIZE + 42 then
+      state = GameStates.game_over
+    -- Check Up side Screen for Collision
+    elseif snakeY < 1 then
+      state = GameStates.game_over
+    -- Check Down side Screen for Collision
+    elseif snakeY > SIZE + 14 then
+      state = GameStates.game_over
+    end
+  else
+    if snakeX < 0 then
+      snakeX = SIZE + 43
+    -- Check Right side Screen for Collision
+    elseif snakeX > SIZE + 43 then
+      snakeX = 0
+    -- Check Up side Screen for Collision
+    elseif snakeY < 0 then
+      snakeY = SIZE + 15
+    -- Check Down side Screen for Collision
+    elseif snakeY > SIZE + 15 then
+      snakeY = 0
+    end
   end
   
   -- Add tail behind snake head

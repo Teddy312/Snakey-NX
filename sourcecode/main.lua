@@ -22,6 +22,8 @@ titleFont = nil
 nameFont = nil
 creditFont = nil
 
+border_enable = true
+
 function love.load()
   currentscreen = 'menu'
   
@@ -71,7 +73,7 @@ end
 
 function menuLoad()
   -- menu
-  table.insert(buttons, newButton('Press A To Start'))
+  table.insert(buttons, newButton('Press ZL To Start'))
 end
 
 function gameDraw()
@@ -80,8 +82,8 @@ function gameDraw()
     love.graphics.setFont(font)
     love.graphics.print('Game Over!', 520,325)
     love.graphics.setFont(nameFont)
-    love.graphics.print('Press B to restart', 515, 375)
-    love.graphics.print('Press + to quit to menu', 482, 410)
+    love.graphics.print('Press ZL to restart', 510, 375)
+    love.graphics.print('Press L to quit to menu', 485, 410)
   end
     
   -- Draw Pause Text
@@ -89,7 +91,7 @@ function gameDraw()
     love.graphics.setFont(font)
     love.graphics.print('Game Paused', 520, 325)
     love.graphics.setFont(nameFont)
-    love.graphics.print('Press A to continue', 519, 375)
+    love.graphics.print('Press - to continue', 519, 375)
   end
 end
 
@@ -108,11 +110,27 @@ function menuDraw()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setFont(titleFont)
   love.graphics.print('Snakey NX', 465, 100)
+  love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setFont(nameFont)
-  love.graphics.print('By Teddy312', 580, 200)
+  love.graphics.print('By Teddy312', 550, 200)
   
+  -- Draw Credits
   love.graphics.setFont(creditFont)
   love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', 7, 695)
+  
+  -- Draw Options
+  love.graphics.setColor(1, 1, 1, 1)
+  love.graphics.setFont(creditFont)
+  love.graphics.print('Press X to enable/disable walls', 500, 450)
+  if border_enable == true then
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.setFont(creditFont)
+    love.graphics.print('Walls are on', 575, 475)
+  elseif border_enable == false then
+    love.graphics.setColor(1, 0, 0, 1)
+    love.graphics.setFont(creditFont)
+    love.graphics.print('Walls are off', 575, 475)
+  end
   
   -- Draw Buttons and Text
   for i, button in ipairs (buttons) do
@@ -151,17 +169,17 @@ end
 
 -- Control functions for Nintendo Switch
 function love.gamepadpressed(joystick, button)
-  if button == 'dpleft' and state == GameStates.running then
+  if button == 'dpleft' and state == GameStates.running  and currentscreen == 'game' then
     left = true; right = false; up = false; down = false;
-  elseif button == 'dpright' and state == GameStates.running then
+  elseif button == 'dpright' and state == GameStates.running  and currentscreen == 'game' then
     left = false; right = true; up = false; down = false;
-  elseif button == 'dpup' and state == GameStates.running then
+  elseif button == 'dpup' and state == GameStates.running  and currentscreen == 'game' then
     left = false; right = false; up = true; down = false;
-  elseif button == 'dpdown' and state == GameStates.running then
+  elseif button == 'dpdown' and state == GameStates.running  and currentscreen == 'game' then
     left = false; right = false; up = false; down = true;
-  elseif button == 'b' and state == GameStates.game_over then
+  elseif button == 'zl' and state == GameStates.game_over then
     game_restart()
-  elseif button == 'a' then
+  elseif button == '-' then
     if state == GameStates.running then
       -- Pause Game
       state = GameStates.pause
@@ -171,11 +189,17 @@ function love.gamepadpressed(joystick, button)
       -- Unpause Game
       state = GameStates.running
     end
-  elseif button == 'plus' and state == GameStates.game_over then
+  elseif button == 'l' and state == GameStates.game_over then
     game_end()
+  elseif button == 'x' and currentscreen == 'menu' then
+    if border_enable == true then
+      border_enable = false
+    elseif border_enable == false then
+      border_enable = true
+    end
   end
   
-  if button == 'a' and currentscreen == 'menu' then
+  if button == 'zl' and currentscreen == 'menu' then
     currentscreen = 'game'
     state = GameStates.running
     game()
@@ -184,13 +208,13 @@ end
 
 -- Control functions for PC for testing purposes
 function love.keypressed(key)
-  if key == 'left' and state == GameStates.running then
+  if key == 'left' and state == GameStates.running and currentscreen == 'game' then
     left = true; right = false; up = false; down = false;
-  elseif key == 'right' and state == GameStates.running then
+  elseif key == 'right' and state == GameStates.running and currentscreen == 'game' then
     left = false; right = true; up = false; down = false;
-  elseif key == 'up' and state == GameStates.running then
+  elseif key == 'up' and state == GameStates.running and currentscreen == 'game' then
     left = false; right = false; up = true; down = false;
-  elseif key == 'down' and state == GameStates.running then
+  elseif key == 'down' and state == GameStates.running and currentscreen == 'game' then
     left = false; right = false; up = false; down = true;
   elseif key == 'r' and state == GameStates.game_over then
     game_restart()
@@ -204,8 +228,15 @@ function love.keypressed(key)
       -- Unpause Game
       state = GameStates.running
     end
+    
   elseif key == 'backspace' and state == GameStates.game_over then
     game_end()
+  elseif key == 'm' and currentscreen == 'menu' then
+    if border_enable == true then
+      border_enable = false
+    elseif border_enable == false then
+      border_enable = true
+    end
   end
   
   if key == 'return' and currentscreen == 'menu' then
