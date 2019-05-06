@@ -179,7 +179,7 @@ function love.gamepadpressed(joystick, button)
     left = false; right = false; up = false; down = true;
   elseif button == 'zl' and state == GameStates.game_over then
     game_restart()
-  elseif button == '-' then
+  elseif button == 'minus' then
     if state == GameStates.running then
       -- Pause Game
       state = GameStates.pause
