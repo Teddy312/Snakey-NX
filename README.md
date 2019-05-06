@@ -28,8 +28,8 @@ Launch via homebrew menu
 
 # Sources
 Love2D - https://love2d.org  
-LovePotion - https://github.com/TurtleP/LovePotion  
 Soundtrack - https://soundimage.org/chiptunes/
 
 # Credits
+LovePotion - https://github.com/TurtleP/LovePotion  
 Music by Eric Matyas - www.soundimage.org
