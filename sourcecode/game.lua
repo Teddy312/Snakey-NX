@@ -105,9 +105,7 @@ function game_update()
     add_food()
     tail_length = tail_length + 1;
     table.insert(tail, {0, 0})
-  end
-  
-  if snakeX == food2X and snakeY == food2Y then
+  elseif snakeX == food2X and snakeY == food2Y then
     add_second_food()
     tail_length = tail_length + 1;
     table.insert(tail, {0, 0})
