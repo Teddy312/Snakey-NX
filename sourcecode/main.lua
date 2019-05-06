@@ -37,8 +37,8 @@ function love.load()
     -- Load Fonts
     font = love.graphics.newFont("Roboto-Light.ttf", 16 * fs)
     titleFont = love.graphics.newFont("Roboto-Light.ttf", 32 * fs)
-    nameFont = love.graphics.newFont("Roboto-Light.ttf", 9 * fs)
-    creditFont = love.graphics.newFont("Roboto-Light.ttf", 6 * fs)
+    nameFont = love.graphics.newFont("Roboto-Light.ttf", 12 * fs)
+    creditFont = love.graphics.newFont("Roboto-Light.ttf", 9 * fs)
   elseif currentscreen == 'game' then
     -- Do Nothing
   end
@@ -80,8 +80,8 @@ function gameDraw()
     love.graphics.setFont(font)
     love.graphics.print('Game Over!', 520,325)
     love.graphics.setFont(nameFont)
-    love.graphics.print('Press B to restart', 540, 375)
-    love.graphics.print('Press + to quit to menu', 515, 400)
+    love.graphics.print('Press B to restart', 515, 375)
+    love.graphics.print('Press + to quit to menu', 482, 410)
   end
     
   -- Draw Pause Text
@@ -89,7 +89,7 @@ function gameDraw()
     love.graphics.setFont(font)
     love.graphics.print('Game Paused', 520, 325)
     love.graphics.setFont(nameFont)
-    love.graphics.print('Press A to continue', 540, 375)
+    love.graphics.print('Press A to continue', 519, 375)
   end
 end
 
@@ -112,7 +112,7 @@ function menuDraw()
   love.graphics.print('By Teddy312', 580, 200)
   
   love.graphics.setFont(creditFont)
-  love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', 1, 705)
+  love.graphics.print('Credits: Music by Eric Matyas - www.soundimage.org', 7, 695)
   
   -- Draw Buttons and Text
   for i, button in ipairs (buttons) do
