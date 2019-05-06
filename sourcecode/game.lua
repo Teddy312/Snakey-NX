@@ -25,16 +25,24 @@ right = false
 
 -- Add food at random points within screen size
 function add_food()
-  math.randomseed(os.time() + 1.5)
-  foodX = math.random(SIZE + 42)
-  foodY = math.random(SIZE + 14)
+  if foodX == Food2X and foodY == Food2Y then
+    add_food()
+  else
+    math.randomseed(os.time() + 0.001)
+    foodX = math.random(SIZE + 42)
+    foodY = math.random(SIZE + 14)
+  end
 end
 
 -- Add second food at random points within screen size
 function add_second_food()
-  math.randomseed(os.time() + 2)
-  food2X = math.random(SIZE + 42)
-  food2Y = math.random(SIZE + 14)
+  if food2X == FoodX and food2Y == FoodY then
+    add_second_food()
+  else
+    math.randomseed(os.time() + 1)
+    food2X = math.random(SIZE + 42)
+    food2Y = math.random(SIZE + 14)
+  end
 end
 
 -- Draw Stuff In-game
@@ -156,6 +164,7 @@ function game_end()
   -- Restart Game
   snakeX, snakeY = 15, 15
   dirX, dirY = 0, 0
+  tail = {}
   up = false; down = false; left = false; right = false;
   tail_length = 0
   state = GameStates.running
