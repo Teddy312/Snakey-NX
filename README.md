@@ -18,6 +18,10 @@ GbaTemp page: https://gbatemp.net/threads/my-first-homebrew-game-snakey-nx.53783
   - ZL to start game
   - X to change mode
 - Game Controls
+  - Dpad left to move Left
+  - Dpad right to move Right
+  - Dpad up to move Up
+  - Dpad down to move Down
   - Minus to Pause/Unpause
   - L to return to Menu when game over
   - ZL to restart when game over
