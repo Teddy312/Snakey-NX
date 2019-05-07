@@ -39,9 +39,6 @@ GbaTemp page: https://gbatemp.net/threads/my-first-homebrew-game-snakey-nx.53783
 Download and move the "Snakey_NX.nro" to the switch folder on the micro-sd card of your switch.  
 Launch via homebrew menu
 
-# Images
-https://bear312.nl/public-share/K7MWQq6u2VBVCi0/preview?path=%2F&mode=thumbnail&size=medium&CSRF-Token=2TCUArz-wr9KKkc12aj0sA
-
 # Sources
 Love2D - https://love2d.org  
 LovePotion - https://github.com/TurtleP/LovePotion  
