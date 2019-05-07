@@ -16,7 +16,7 @@ GbaTemp page: https://gbatemp.net/threads/my-first-homebrew-game-snakey-nx.53783
 
 - Menu Controls
   - ZL to start game
-  - X to change mode
+  - X to change Wall mode
 - Game Controls
   - Dpad left to move Left
   - Dpad right to move Right
@@ -25,6 +25,14 @@ GbaTemp page: https://gbatemp.net/threads/my-first-homebrew-game-snakey-nx.53783
   - Minus to Pause/Unpause
   - L to return to Menu when game over
   - ZL to restart when game over
+- Multiplayer Controls
+  - Plus to spawn player 2
+  Player 2 Controls
+  - Game Controls
+    - Y to move Left
+    - A to move Right
+    - X to move Up
+    - B to move Down
 
 # Installation
 
