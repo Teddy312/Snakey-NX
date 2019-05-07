@@ -79,6 +79,7 @@ end
 function gameDraw()
   -- Draw GameOver Text
   if state == GameStates.game_over then
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.setFont(font)
     love.graphics.print('Game Over!', 520,325)
     love.graphics.setFont(nameFont)
@@ -199,6 +200,25 @@ function love.gamepadpressed(joystick, button)
     end
   end
   
+  -- Player 2 Controls
+  if two_player then  
+    if button == 'x' and state == GameStates.running and currentscreen == 'game' then
+      left2 = true; right2 = false; up2 = false; down2 = false;
+    elseif button == 'a' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = true; up2 = false; down2 = false;
+    elseif button == 'x' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = true; down2 = false;
+    elseif button == 'b' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = false; down2 = true;
+    end
+  end
+  
+  -- Activate Player 2
+  if button == 'plus' and currentscreen == 'game' then
+    two_player = true
+  end
+  
+  -- Start Game
   if button == 'zl' and currentscreen == 'menu' then
     currentscreen = 'game'
     state = GameStates.running
@@ -228,8 +248,22 @@ function love.keypressed(key)
       -- Unpause Game
       state = GameStates.running
     end
+  end
+  
     
-  elseif key == 'backspace' and state == GameStates.game_over then
+  if two_player then  
+    if key == 'a' and state == GameStates.running and currentscreen == 'game' then
+      left2 = true; right2 = false; up2 = false; down2 = false;
+    elseif key == 'd' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = true; up2 = false; down2 = false;
+    elseif key == 'w' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = true; down2 = false;
+    elseif key == 's' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = false; down2 = true;
+    end
+  end
+        
+  if key == 'backspace' and state == GameStates.game_over then
     game_end()
   elseif key == 'm' and currentscreen == 'menu' then
     if border_enable == true then
@@ -238,6 +272,11 @@ function love.keypressed(key)
       border_enable = true
     end
   end
+  
+  if key == 'h' and currentscreen == 'game' then
+    two_player = true
+  end
+  
   
   if key == 'return' and currentscreen == 'menu' then
     currentscreen = 'game'

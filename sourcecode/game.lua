@@ -2,7 +2,7 @@
 GameStates = {pause = 'pause', running = 'running', game_over = 'game over'}
 state = GameStates.running
 
--- Start Position Snake
+-- Start Position Snake 1
 local snakeX = 15
 local snakeY = 15
 local dirX = 0
@@ -15,13 +15,32 @@ local foodY = 0
 local food2X = 0
 local food2Y = 0
 
+-- tail Snake1
 local tail = {}
 
+-- Snake1 Variables
 tail_length = 0
 up = false
 down = false
 left = false
 right = false
+
+-- Snake2 Variables
+tail2_length = 0
+up2 = false
+down2 = false
+left2 = false
+right2 = false
+
+-- Tail Snake2
+local tail2 = {}
+
+-- Start Position Snake 2
+local snake2X = 25
+local snake2Y = 15
+local dir2X = 0
+local dir2Y = 0
+
 
 -- Add food at random points within screen size
 function add_food()
@@ -58,14 +77,26 @@ function game_draw()
       love.graphics.rectangle("fill", 20, 20, 1240, 680)
     end
     
-    -- Draw Snake Head
+    -- Draw Snake1 Head
     love.graphics.setColor(1, 1, 1, 1.0)
     love.graphics.rectangle("fill", snakeX * SIZE, snakeY * SIZE, SIZE, SIZE)
     
-    -- Draw Snake Tail
+    -- Draw Snake1 Tail
     love.graphics.setColor(1, 1, 1, 0.7)
     for _, v in ipairs(tail) do
       love.graphics.rectangle("fill", v[1] * SIZE, v[2] * SIZE, SIZE, SIZE)
+    end
+    
+    if two_player then
+      -- Draw Snake2 Head
+      love.graphics.setColor(0, 1, 1, 1.0)
+      love.graphics.rectangle("fill", snake2X * SIZE, snake2Y * SIZE, SIZE, SIZE)
+    
+      -- Draw Snake2 Tail
+      love.graphics.setColor(0, 1, 1, 0.7)
+      for _, v2 in ipairs(tail2) do
+        love.graphics.rectangle("fill", v2[1] * SIZE, v2[2] * SIZE, SIZE, SIZE)
+      end
     end
   
     -- Draw Food 1
@@ -77,14 +108,22 @@ function game_draw()
     love.graphics.rectangle("fill", food2X * SIZE, food2Y * SIZE, SIZE, SIZE)
     
     -- Draw Score Text
-    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setColor(1, 1, 1, 0.7)
     love.graphics.setFont(nameFont)
     love.graphics.print('Score: '.. tail_length, 25, 23)
+    
+    if two_player then
+      love.graphics.setColor(0, 1, 1, 0.7)
+      love.graphics.setFont(nameFont)
+      love.graphics.print('Score: '.. tail2_length, 25, 50)
+    end
   end
 end
 
 -- Update Stuff In-Game
 function game_update()
+  -- Snake1
+  
 	-- Update Movement
 	if up and dirY == 0 then
 		dirX, dirY = 0, -1
@@ -151,10 +190,102 @@ function game_update()
     end
   end
   
-  -- Checks if snake collids with itself
-  for _, v in ipairs(tail) do 
+  -- Checks if snake collides with itself
+  for _, v in ipairs(tail) do
     if snakeX == v[1] and snakeY == v[2] then
       state = GameStates.game_over
+    end
+  end
+  for _, b in ipairs(tail2) do 
+    if snakeX == b[1] and snakeY == b[2] then
+      state = GameStates.game_over
+    end
+  end
+  
+  if two_player then
+    if snakeX == snake2X and snakeY == snake2Y then
+      state = GameStates.game_over
+    end
+  end
+  
+  -- Snake2
+  if two_player then
+    -- Update Movement
+    if up2 and dir2Y == 0 then
+      dir2X, dir2Y = 0, -1
+    elseif down2 and dir2Y == 0 then
+      dir2X, dir2Y = 0, 1
+    elseif left2 and dir2X == 0 then 
+      dir2X, dir2Y = -1, 0
+    elseif right2 and dir2X == 0 then
+      dir2X, dir2Y = 1, 0	
+    end
+    
+    local old2X = snake2X
+    local old2Y = snake2Y
+    
+    snake2X = snake2X + dir2X
+    snake2Y = snake2Y + dir2Y
+  
+    -- Spawn new food when snake reaches it
+    if snake2X == foodX and snake2Y == foodY then
+      add_food()
+      tail2_length = tail2_length + 1;
+      table.insert(tail2, {0, 0})
+    elseif snake2X == food2X and snake2Y == food2Y then
+      add_second_food()
+      tail2_length = tail2_length + 1;
+      table.insert(tail2, {0, 0})
+    end
+  
+    -- Check Left side Screen for Collision
+    if border_enable then
+      if snake2X < 1 then
+        player2_dead()
+      -- Check Right side Screen for Collision
+      elseif snake2X > SIZE + 42 then
+        player2_dead()
+      -- Check Up side Screen for Collision
+      elseif snake2Y < 1 then
+        player2_dead()
+      -- Check Down side Screen for Collision
+      elseif snake2Y > SIZE + 14 then
+        player2_dead()
+      end
+    else
+      if snake2X < 0 then
+        snake2X = SIZE + 43
+      -- Check Right side Screen for Collision
+      elseif snake2X > SIZE + 43 then
+        snake2X = 0
+      -- Check Up side Screen for Collision
+      elseif snake2Y < 0 then
+        snake2Y = SIZE + 15
+      -- Check Down side Screen for Collision
+      elseif snake2Y > SIZE + 15 then
+        snake2Y = 0
+      end
+    end
+  
+    -- Add tail behind snake head
+    if tail2_length > 0 then
+      for _, b in ipairs(tail2) do
+        local x2, y2 = b[1], b[2]
+        b[1], b[2] = old2X, old2Y
+        old2X, old2Y = x2, y2
+      end
+    end
+  
+    -- Checks if snake collids with itself
+    for _, v in ipairs(tail) do
+      if snake2X == v[1] and snake2Y == v[2] then
+        player2_dead()
+      end
+    end
+    for _, b in ipairs(tail2) do 
+      if snake2X == b[1] and snake2Y == b[2] then
+        player2_dead()
+      end
     end
   end
 end
@@ -169,6 +300,7 @@ function game_restart()
   state = GameStates.running
   add_food()
   add_second_food()
+  player2_dead()
 end
 
 -- Restart Game
@@ -183,10 +315,27 @@ function game_end()
   up = false; down = false; left = false; right = false;
   tail_length = 0
   state = GameStates.running
+  player2_dead()
   
   -- Stop Soundtrack
   music:stop()
   
   -- Call love.load in main.lua
   love.load()
+end
+
+-- When player 2 dies
+function player2_dead()
+  -- Disable player 2
+  two_player = false
+  -- Reset position player 2
+  snake2X = 25
+  snake2Y = 15
+  -- Reset directions player 2
+  up2 = false; down2 = false; left2 = false; right2 = false;
+  dir2X, dir2Y = 0, 0
+  -- Reset tail Player 2
+  tail2 ={}
+  tail2_length = 0
+  
 end
