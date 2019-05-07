@@ -111,6 +111,9 @@ function menuDraw()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setFont(titleFont)
   love.graphics.print('Snakey NX', 465, 100)
+  love.graphics.setColor(1, 1, 0, 1)
+  love.graphics.setFont(creditFont)
+  love.graphics.print('v0.4.0', 775, 143)
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setFont(nameFont)
   love.graphics.print('By Teddy312', 550, 200)
@@ -170,6 +173,7 @@ end
 
 -- Control functions for Nintendo Switch
 function love.gamepadpressed(joystick, button)
+  
   if button == 'dpleft' and state == GameStates.running  and currentscreen == 'game' then
     left = true; right = false; up = false; down = false;
   elseif button == 'dpright' and state == GameStates.running  and currentscreen == 'game' then
@@ -178,7 +182,22 @@ function love.gamepadpressed(joystick, button)
     left = false; right = false; up = true; down = false;
   elseif button == 'dpdown' and state == GameStates.running  and currentscreen == 'game' then
     left = false; right = false; up = false; down = true;
-  elseif button == 'zl' and state == GameStates.game_over then
+  end
+  
+  -- Player 2 Controls
+  if two_player then  
+    if button == 'y' and state == GameStates.running and currentscreen == 'game' then
+      left2 = true; right2 = false; up2 = false; down2 = false;
+    elseif button == 'a' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = true; up2 = false; down2 = false;
+    elseif button == 'x' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = true; down2 = false;
+    elseif button == 'b' and state == GameStates.running and currentscreen == 'game' then
+      left2 = false; right2 = false; up2 = false; down2 = true;
+    end
+  end
+  
+  if button == 'zl' and state == GameStates.game_over then
     game_restart()
   elseif button == 'minus' then
     if state == GameStates.running then
@@ -200,19 +219,6 @@ function love.gamepadpressed(joystick, button)
     end
   end
   
-  -- Player 2 Controls
-  if two_player then  
-    if button == 'x' and state == GameStates.running and currentscreen == 'game' then
-      left2 = true; right2 = false; up2 = false; down2 = false;
-    elseif button == 'a' and state == GameStates.running and currentscreen == 'game' then
-      left2 = false; right2 = true; up2 = false; down2 = false;
-    elseif button == 'x' and state == GameStates.running and currentscreen == 'game' then
-      left2 = false; right2 = false; up2 = true; down2 = false;
-    elseif button == 'b' and state == GameStates.running and currentscreen == 'game' then
-      left2 = false; right2 = false; up2 = false; down2 = true;
-    end
-  end
-  
   -- Activate Player 2
   if button == 'plus' and currentscreen == 'game' then
     two_player = true
@@ -226,8 +232,13 @@ function love.gamepadpressed(joystick, button)
   end
 end
 
+-------------------------------------------------------------- END OF SCRIPT ----------------------------------------------------------------
+
+
+
 -- Control functions for PC for testing purposes
 function love.keypressed(key)
+  if two_player == false then 
   if key == 'left' and state == GameStates.running and currentscreen == 'game' then
     left = true; right = false; up = false; down = false;
   elseif key == 'right' and state == GameStates.running and currentscreen == 'game' then
@@ -249,9 +260,15 @@ function love.keypressed(key)
       state = GameStates.running
     end
   end
+  end
   
     
   if two_player then  
+    
+    if key == 'left' and state == GameStates.running and currentscreen == 'game' then
+    left = false; right = false; up = false; down = true;
+    end
+    
     if key == 'a' and state == GameStates.running and currentscreen == 'game' then
       left2 = true; right2 = false; up2 = false; down2 = false;
     elseif key == 'd' and state == GameStates.running and currentscreen == 'game' then
@@ -282,6 +299,7 @@ function love.keypressed(key)
     currentscreen = 'game'
     state = GameStates.running
     game()
+    two_player = false;
   elseif key == 'escape' and currentscreen == 'menu' then
     love.event.quit(0)
   end
