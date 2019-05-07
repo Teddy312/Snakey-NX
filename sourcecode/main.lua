@@ -238,7 +238,6 @@ end
 
 -- Control functions for PC for testing purposes
 function love.keypressed(key)
-  if two_player == false then 
   if key == 'left' and state == GameStates.running and currentscreen == 'game' then
     left = true; right = false; up = false; down = false;
   elseif key == 'right' and state == GameStates.running and currentscreen == 'game' then
@@ -260,15 +259,9 @@ function love.keypressed(key)
       state = GameStates.running
     end
   end
-  end
   
     
-  if two_player then  
-    
-    if key == 'left' and state == GameStates.running and currentscreen == 'game' then
-    left = false; right = false; up = false; down = true;
-    end
-    
+  if two_player then    
     if key == 'a' and state == GameStates.running and currentscreen == 'game' then
       left2 = true; right2 = false; up2 = false; down2 = false;
     elseif key == 'd' and state == GameStates.running and currentscreen == 'game' then
