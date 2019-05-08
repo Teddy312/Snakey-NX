@@ -1,9 +1,15 @@
 # Snakey-NX
+
 My first homebrew game for Nintendo Switch
  
 My first homebrew game made for the Nintendo Switch using Love2D and LovePotion by TurtleP  
 (https://github.com/TurtleP/LovePotion)
 
+# Features
+
+ - Singleplayer and multiplayer snake
+ - 2 Modes (With or without walls)
+ 
 
 # Description
 
